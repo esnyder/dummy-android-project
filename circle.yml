@@ -1,0 +1,33 @@
+machine:
+  environment:
+    ANDROID_HOME: /usr/local/android-sdk-linux
+    GRADLE_OPTS: -Xmx2048m
+
+dependencies:
+  pre:
+    - echo y | android update sdk --no-ui --all --filter "android-21, build-tools-21.1.2"
+    #- echo y | android update sdk --no-ui --all --filter "sys-img-armeabi-v7a-android-21"
+    #- echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
+    #- echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"
+    #- echo y | android update sdk --no-ui --all --filter "extra-android-support"
+    #- echo y | android update sdk --no-ui --all --filter "extra-google-google_play_services"
+
+  override:
+    - ./gradlew dependencies || true
+  
+test:
+  pre:
+    - echo n | android create avd --force -n test -t "android-21"
+    - which emulator
+    - emulator -avd test -no-skin -no-audio -no-window -no-boot-anim: 
+        background: true
+        parallel: true
+    - ./wait.sh:
+        parallel: true
+    - $ANDROID_HOME/platform-tools/adb shell input keyevent 82: 
+        background: true
+    
+  override:
+    - $ANDROID_HOME/platform-tools/adb wait-for-device
+    - ./gradlew clean installStagingDebug app:connectedAndroidTestStagingDebug: 
+        timeout: 300
