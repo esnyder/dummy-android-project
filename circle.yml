@@ -15,22 +15,19 @@ dependencies:
   
 test:
   pre:
-    - echo n | android create avd --force -n test --abi x86 -t "android-21"
-    - which emulator
-    - emulator -avd test -no-skin -no-audio -no-window -no-boot-anim -verbose: 
+    - echo n | android create avd --force -n test --abi armeabi-v7a -t "android-21"
+    - emulator -avd test -no-audio -no-window -no-boot-anim -verbose: 
         background: true
         parallel: true
     - adb logcat:
         background: true
         parallel: true
-    - ps auxw | grep emulator
-    - cat $CIRCLE_ARTIFACTS/*
-    - adb wait-for-device:
+    - adb wait-for-device && echo "done waiting at" `date`:
         parallel: true
-    - $ANDROID_HOME/platform-tools/adb shell input keyevent 82: 
         background: true
+    - ./wait.sh
+    - cat $CIRCLE_ARTIFACTS/*
     
   override:
-    - $ANDROID_HOME/platform-tools/adb wait-for-device
     - ./gradlew clean installStagingDebug app:connectedAndroidTestStagingDebug: 
         timeout: 300
