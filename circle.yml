@@ -17,7 +17,7 @@ test:
   pre:
     - echo n | android create avd --force -n test --abi x86 -t "android-21"
     - which emulator
-    - emulator -avd test -no-skin -no-audio -no-window -no-boot-anim: 
+    - emulator -avd test -no-skin -no-audio -no-window -no-boot-anim -verbose: 
         background: true
         parallel: true
     - adb logcat:
