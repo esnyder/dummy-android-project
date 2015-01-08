@@ -19,14 +19,14 @@ test:
     - emulator -avd test -no-skin -no-audio -no-window -no-boot-anim -verbose: 
         background: true
         parallel: true
-    - adb logcat:
-        background: true
-        parallel: true
     - adb wait-for-device && echo "done waiting at" `date`:
         parallel: true
         background: true
     - ./wait.sh:
         timeout: 60
+    - adb logcat:
+        background: true
+        parallel: true
     - cat $CIRCLE_ARTIFACTS/*
     
   override:
