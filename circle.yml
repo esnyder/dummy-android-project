@@ -15,8 +15,8 @@ dependencies:
   
 test:
   pre:
-    - echo n | android create avd --force -n test --abi x86 -t "android-21"
-    - emulator -avd test -no-audio -no-window -no-boot-anim -verbose: 
+    - echo n | android create avd --force -n test --abi armeabi-v7b -t "android-21"
+    - emulator -avd test -no-skin -no-audio -no-window -no-boot-anim -verbose: 
         background: true
         parallel: true
     - adb logcat:
@@ -25,7 +25,8 @@ test:
     - adb wait-for-device && echo "done waiting at" `date`:
         parallel: true
         background: true
-    - ./wait.sh
+    - ./wait.sh:
+        timeout: 60
     - cat $CIRCLE_ARTIFACTS/*
     
   override:
