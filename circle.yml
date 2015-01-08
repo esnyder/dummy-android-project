@@ -15,7 +15,7 @@ dependencies:
   
 test:
   pre:
-    - echo n | android create avd --force -n test --abi armeabi-v7b -t "android-21"
+    - echo n | android create avd --force -n test --abi armeabi-v7a -t "android-21"
     - emulator -avd test -no-skin -no-audio -no-window -no-boot-anim -verbose: 
         background: true
         parallel: true
