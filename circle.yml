@@ -14,7 +14,7 @@ test:
     - echo `which emulator`
     - echo $ANDROID_HOME
     - echo $BIN
-    - $BIN/echo "hi"
+    - $BIN/echo "hi":
         background: true
         parallel: true
     - $ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio:
