@@ -9,8 +9,12 @@ dependencies:
     - bash install-dependencies.sh
 test:
   override:
+    - echo "hi"
+    - echo `which emulator`
+    - echo $ANDROID_HOME
     - $ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio:
         backgroud: true
         parallel: true
+    - echo "bye"
     - bash wait.sh
     - ./gradlew connectAndroidTest
