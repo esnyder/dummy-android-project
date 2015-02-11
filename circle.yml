@@ -1,6 +1,7 @@
 machine:
   environment:
     ANDROID_HOME: /usr/local/android-sdk-linux
+    BIN: /usr/bin
 dependencies:
   cache_directories:
     - ~/.android
@@ -12,6 +13,10 @@ test:
     - echo "hi"
     - echo `which emulator`
     - echo $ANDROID_HOME
+    - echo $BIN
+    - $BIN/echo "hi"
+        background: true
+        parallel: true
     - $ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio:
         backgroud: true
         parallel: true
