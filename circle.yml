@@ -1,34 +1,16 @@
 machine:
   environment:
     ANDROID_HOME: /usr/local/android-sdk-linux
-    GRADLE_OPTS: -Xmx2048m
-
 dependencies:
   cache_directories:
     - ~/.android
     - ~/android
-  pre:
-    - ./install-dependencies.sh
-
   override:
-    - ./gradlew dependencies || true
-  
+    - bash install-dependencies.sh
 test:
-  pre:
-    - echo n | android create avd --force -n test --abi armeabi-v7a -t "android-21"
-    - $ANDROID_HOME/tools/emulator -avd test -no-skin -no-audio -no-window -no-boot-anim -verbose: 
-        background: true
-        parallel: true
-    - adb wait-for-device && echo "done waiting at" `date`:
-        parallel: true
-        background: true
-    - ./wait.sh:
-        timeout: 60
-    - adb logcat:
-        background: true
-        parallel: true
-    - cat $CIRCLE_ARTIFACTS/*
-    
   override:
-    - ./gradlew clean installStagingDebug app:connectedAndroidTestStagingDebug: 
-        timeout: 300
+    - $ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio:
+        backgroud: true
+        parallel: true
+    - bash wait.sh
+    - ./gradlew connectAndroidTest
