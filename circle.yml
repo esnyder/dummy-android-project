@@ -14,12 +14,14 @@ test:
     - echo `which emulator`
     - echo $ANDROID_HOME
     - echo $BIN
-    - $BIN/echo "hi":
+    - $BIN/echo --help:
         background: true
         parallel: true
     - $ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio:
         backgroud: true
         parallel: true
-    - echo "bye"
+    - "$ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio":
+        backgroud: true
+        parallel: true
     - bash wait.sh
     - ./gradlew connectAndroidTest
