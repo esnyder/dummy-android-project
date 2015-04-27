@@ -1,13 +1,7 @@
-machine:
-  environment:
-    ANDROID_HOME: /usr/local/android-sdk-linux
-    BIN: /usr/bin
 dependencies:
-  cache_directories:
-    - ~/.android
-    - ~/android
-  override:
-    - bash install-dependencies.sh
+  post:
+    - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-22.0.1,android-22,extra-google-google_play_services,extra-android-support
+
 test:
   override:
     - echo "hi"
