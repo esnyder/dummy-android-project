@@ -8,12 +8,6 @@ test:
     - echo `which emulator`
     - echo $ANDROID_HOME
     - echo $BIN
-    - $BIN/echo --help:
-        background: true
-        parallel: true
-    - $ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio:
-        backgroud: true
-        parallel: true
     - "$ANDROID_HOME/tools/emulator -avd testing -no-window -no-boot-anim -no-audio":
         backgroud: true
         parallel: true
